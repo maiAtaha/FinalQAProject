@@ -14,17 +14,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-
-    - name: Install k6
-  run: |
-    curl -s https://dl.k6.io/key.gpg | sudo apt-key add -
-    echo "deb https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
-    sudo apt-get update
-    sudo apt-get install -y k6
+      - name: Install k6
+        run: |
+          curl -L https://github.com/grafana/k6/releases/download/v0.49.0/k6-v0.49.0-linux-amd64.tar.gz -o k6.tar.gz
+          tar -xzf k6.tar.gz
+          sudo mv k6-v0.49.0-linux-amd64/k6 /usr/local/bin/k6
+          k6 version
 
       - name: Run k6 performance test
         run: |
