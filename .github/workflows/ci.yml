@@ -24,4 +24,5 @@ jobs:
       - name: Run k6 performance test
         run: |
           cd performancek6
+          cd 3EndPoints
           k6 run k6script.js
