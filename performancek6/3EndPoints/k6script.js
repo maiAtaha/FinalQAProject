@@ -5,8 +5,23 @@ import "./libs/shim/expect.js";
 import "./libs/shim/urijs.js";
 import { group } from "k6";
 
-export let options = { maxRedirects: 4 };
+export let options = {
+  scenarios: {
 
+    smoke: {
+      executor: 'constant-vus',
+      vus: 3,
+      duration: '20s',
+      tags: { test_type: 'smoke' },
+    },
+
+    load: {
+      executor: 'constant-vus',
+      vus: 25,
+      duration: '40s',
+      tags: { test_type: 'load' },
+    },
+  },
 const Request = Symbol.for("request");
 postman[Symbol.for("initial")]({
   options,
